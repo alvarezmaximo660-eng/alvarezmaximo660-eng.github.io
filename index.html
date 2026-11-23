@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Model Book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: an agency model book. A comp card opens it, and each kind of work gets its own page format. */
+:root {
+  --paper: #eef1f6;
+  --sheet: #dfe4ee;
+  --ink: #11162a;
+  --muted: #535b74;
+  --line: #bdc4d4;
+  --cobalt: #1f3fd1;
+  --on-cobalt: #f4f6ff;
+  --frame-a: #c8d0e2;
+  --frame-b: #929fbd;
+  --frame-c: #5d6a8d;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0d1120; --sheet: #171d33; --ink: #eceffa; --muted: #a2abc5; --line: #2f3753;
+    --cobalt: #8ea2ff; --on-cobalt: #0d1120; --frame-a: #2a3250; --frame-b: #3f4a70; --frame-c: #66739c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0d1120; --sheet: #171d33; --ink: #eceffa; --muted: #a2abc5; --line: #2f3753;
+  --cobalt: #8ea2ff; --on-cobalt: #0d1120; --frame-a: #2a3250; --frame-b: #3f4a70; --frame-c: #66739c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1rem; line-height: 1.6; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+h1, h2, h3, p, dl, dd, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+.wrap { width: 100%; max-width: 1360px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+@media (min-width: 800px) { .wrap { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); } }
+.label { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--paper); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 56px; }
+.brand { font-family: var(--display); font-style: italic; font-size: 1.25rem; text-decoration: none; white-space: nowrap; }
+.top nav { min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.top nav ul { display: flex; gap: 22px; }
+.top nav a { display: block; padding-block: 8px; font-size: .88rem; font-weight: 500; text-decoration: none; white-space: nowrap; border-bottom: 1px solid transparent; }
+.top nav a:hover { color: var(--cobalt); border-color: currentColor; }
+
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: end; padding-block: clamp(32px, 5vw, 64px); }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(4rem, 13vw, 12.5rem); line-height: .86; letter-spacing: -.035em; text-wrap: balance; }
+.hero h1 em { display: block; color: var(--cobalt); padding-left: .55em; }
+.intro { display: grid; gap: 20px; margin-top: clamp(28px, 4vw, 52px); max-width: 34rem; }
+.intro p { font-size: 1.12rem; }
+.cta { display: inline-flex; width: fit-content; padding: 11px 22px; background: var(--cobalt); color: var(--on-cobalt); text-decoration: none; font-weight: 600; }
+.cta:hover { filter: brightness(1.12); }
+
+.frame { position: relative; display: block; width: 100%; max-width: 100%; padding: 0; border: 0; overflow: hidden; background: var(--frame-a); text-align: left; }
+.frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.frame:hover img { transform: scale(1.025); }
+.frame .art { position: absolute; inset: 0; background: radial-gradient(ellipse 58% 42% at var(--x, 50%) var(--y, 34%), var(--frame-a), transparent 72%), linear-gradient(172deg, var(--frame-b), var(--frame-c)); transition: transform .6s ease; }
+.frame:hover .art { transform: scale(1.04); }
+.frame .art::before, .frame .art::after { content: ""; position: absolute; width: 16px; height: 16px; border: 1px solid var(--paper); opacity: .75; }
+.frame .art::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.frame .art::after { right: 10px; bottom: 10px; border-left: 0; border-top: 0; }
+.frame .slot { position: absolute; left: 14px; bottom: 12px; right: 34px; font-family: var(--mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--paper); }
+figure:nth-child(even) .art, .spread > .frame:nth-child(even) .art { --x: 60%; --y: 38%; }
+figure:nth-child(3n) .art, .spread > .frame:nth-child(3n) .art { --x: 40%; --y: 24%; }
+.r34 { aspect-ratio: 3 / 4; } .r23 { aspect-ratio: 2 / 3; } .r45 { aspect-ratio: 4 / 5; } .r32 { aspect-ratio: 3 / 2; } .r11 { aspect-ratio: 1; }
+
+.card { background: var(--sheet); }
+.card dl { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 16px; padding-block: 18px; }
+.card dd { font-family: var(--display); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+
+.section { padding-block: clamp(56px, 8vw, 112px); border-bottom: 1px solid var(--line); }
+.head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 40px; align-items: end; margin-bottom: clamp(24px, 3.5vw, 44px); }
+.head h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 6.5vw, 5.5rem); line-height: 1; letter-spacing: -.02em; }
+.head p { max-width: 62ch; color: var(--muted); }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figcaption { display: grid; gap: 0; font-size: .9rem; line-height: 1.4; }
+figcaption b { font-weight: 600; }
+figcaption span { color: var(--muted); font-size: .82rem; }
+
+.strip { display: grid; grid-auto-flow: column; grid-auto-columns: clamp(210px, 23vw, 310px); gap: 12px; overflow-x: auto; padding-bottom: 14px; scroll-snap-type: x proximity; scrollbar-color: var(--cobalt) transparent; }
+.strip figure { scroll-snap-align: start; }
+
+.story + .story { margin-top: clamp(48px, 6vw, 80px); }
+.story-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 20px; padding-block: 10px; margin-bottom: 14px; border-top: 1px solid var(--ink); }
+.story-head h3 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: 1.6rem; line-height: 1.2; }
+.spread { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.spread > :nth-child(1) { grid-column: span 5; }
+.spread > :nth-child(2) { grid-column: span 7; }
+.spread > :nth-child(3) { grid-column: span 4; }
+.spread > :nth-child(4) { grid-column: span 4; }
+.spread > :nth-child(5) { grid-column: span 4; }
+.spread.flip > :nth-child(1) { grid-column: span 7; }
+.spread.flip > :nth-child(2) { grid-column: span 5; }
+
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 12px; }
+.digitals { background: var(--sheet); }
+.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+
+.about .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 96px); }
+.about h2 { font-family: var(--display); font-weight: 400; font-size: clamp(2.2rem, 4.6vw, 4rem); line-height: 1.05; letter-spacing: -.015em; text-wrap: balance; }
+.about-copy { display: grid; gap: 16px; max-width: 62ch; }
+.credits li { display: flex; justify-content: space-between; gap: 16px; padding-block: 10px; border-bottom: 1px solid var(--line); }
+.credits span:last-child { color: var(--muted); text-align: right; }
+
+.contact { background: var(--cobalt); color: var(--on-cobalt); }
+.contact .wrap { display: grid; gap: 20px; padding-block: clamp(56px, 8vw, 104px); }
+.contact .label { color: inherit; }
+.contact h2 { font-family: var(--display); font-weight: 400; font-style: italic; font-size: clamp(2.6rem, 8vw, 7rem); line-height: 1; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.mail a { font-size: clamp(1.1rem, 2.6vw, 1.7rem); overflow-wrap: anywhere; user-select: all; min-width: 0; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+@media (max-width: 860px) {
+  .hero .wrap, .about .wrap, .head { grid-template-columns: minmax(0, 1fr); }
+  .card dl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trio > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .spread > :nth-child(n), .spread.flip > :nth-child(n) { grid-column: span 6; }
+  .spread > :nth-child(3n) { grid-column: 1 / -1; }
+  .top .wrap { gap: 14px; }
+  .top nav ul { gap: 16px; }
+}
+@media (max-width: 520px) {
+  .brand { display: none; }
+  .top nav { width: 100%; }
+  .top nav ul { justify-content: space-between; }
+  .card dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card dl > :last-child { grid-column: span 3; }
+  .strip { grid-auto-columns: 68vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .frame img, .frame .art { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!--
+  HOW TO ADD A PHOTO
+  1. Put your photo in a folder named "photos" next to this file.
+  2. Find the frame you want to fill and replace the two span lines inside it with:
+     <img src="photos/your-photo.jpg" alt="Maximo Alvarez in a short description">
+-->
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Maximo Alvarez</a>
+    <nav aria-label="Portfolio sections">
+      <ul>
+        <li><a href="#runway">Runway</a></li>
+        <li><a href="#photoshoots">Photoshoots</a></li>
+        <li><a href="#commercial">Commercial</a></li>
+        <li><a href="#digitals">Digitals</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- INTRO AND COVER PHOTO -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span>Maximo</span> <em>Alvarez</em></h1>
+        <div class="intro">
+          <p>Fashion and commercial model. Miami, Florida</p>
+          <!-- <a class="cta" href="#contact">Book or request a comp card</a> -->
+        </div>
+      </div>
+      <div>
+        <div class="frame r34">
+          <span class="art"><img src="images/Headshot1.jpeg"></span>
+          <span class="slot"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEASUREMENTS: replace each dash with your value -->
+  <section class="card" aria-label="Measurements">
+    <div class="wrap">
+      <dl>
+        <div><dt class="label">Height</dt><dd>6'3</dd></div>
+        <div><dt class="label">Chest</dt><dd>40 in</dd></div>
+        <div><dt class="label">Waist</dt><dd>33 in</dd></div>
+        <!-- <div><dt class="label">Hips</dt><dd>—</dd></div> -->
+        <div><dt class="label">Shoe</dt><dd>12.5</dd></div>
+        <div><dt class="label">Hair</dt><dd>Black</dd></div>
+        <div><dt class="label">Eyes</dt><dd>Black</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- RUNWAY -->
+  <section class="section" id="runway">
+    <div class="wrap">
+      <div class="head">
+        <h2>Runway</h2>
+        <p>Shows and presentations. </p>
+      </div>
+      <div class="strip" tabindex="0" aria-label="Runway looks">
+        <figure>
+          <div class="frame r23">
+            <span class="art"><img src="images/Luis-Aponte-Walking.jpeg"></span>
+            <span class="slot">@stan.islav.fl</span>
+          </div>
+          <figcaption><b>Luis Aponte - FMFW</b><span>Miami, 11/14/2026</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r23">
+            <span class="art"><img src="images/Tony-Visions-Standing.jpeg"></span>
+            <span class="slot">@stan.islav.fl</span>
+          </div>
+          <figcaption><b>Tony Visions - FMFW</b><span>Miami, 11/14/2026</span></figcaption>
+        </figure>
+        <!-- <figure>
+          <div class="frame r23">
+            <span class="art"></span>
+            <span class="slot">Look 3 · add photo</span>
+          </div>
+          <figcaption><b>Designer or show</b><span>City, season</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r23">
+            <span class="art"></span>
+            <span class="slot">Look 4 · add photo</span>
+          </div>
+          <figcaption><b>Designer or show</b><span>City, season</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r23">
+            <span class="art"></span>
+            <span class="slot">Look 5 · add photo</span>
+          </div>
+          <figcaption><b>Designer or show</b><span>City, season</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r23">
+            <span class="art"></span>
+            <span class="slot">Look 6 · add photo</span>
+          </div>
+          <figcaption><b>Designer or show</b><span>City, season</span></figcaption>
+        </figure> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOSHOOTS -->
+  <section class="section" id="photoshoots">
+    <div class="wrap">
+      <div class="head">
+        <h2>Photoshoots</h2>
+        <!-- <p>Editorial stories and campaigns, kept together as they were shot.</p> -->
+      </div>
+      <div>
+        <article class="story">
+          <!-- <div class="story-head">
+            <h3>Editorial story title</h3>
+            <span class="label">Magazine · Photographer · Year</span>
+          </div> -->
+          <div class="spread">
+          <div class="frame r45">
+            <span class="art"><img src="images/Adidas-Standing.jpeg"></span>
+            <span class="slot">@maxmediagroup</span>
+          </div>
+          <div class="frame r32">
+            <span class="art"><img src="images/Hand-in-Hair-Dramatic.jpeg" style="object-fit: cover;"></span>
+            <span class="slot"></span>
+          </div>
+          <div class="frame r34">
+            <span class="art"><img src="images/Sitting-Down-Polo.jpeg" style="object-fit: cover;"></span>
+            <span class="slot"></span>
+          </div>
+          <div class="frame r34">
+            <span class="art"><img src="images/Adidas-Glasses.jpeg" style="object-fit: cover;"></span>
+            <span class="slot">@maxmediagroup</span>
+          </div>
+          <div class="frame r34">
+            <span class="art"><img src="images/Shirtless-Parking-Lot.jpeg" style="object-fit: cover;"></span>
+            <span class="slot"></span>
+          </div>
+          </div>
+        </article>
+        <!-- <article class="story">
+          <div class="story-head">
+            <h3>Campaign title</h3>
+            <span class="label">Brand · Photographer · Year</span>
+          </div>
+          <div class="spread flip">
+          <div class="frame r32">
+            <span class="art"></span>
+            <span class="slot">Frame 1 · add photo</span>
+          </div>
+          <div class="frame r45">
+            <span class="art"></span>
+            <span class="slot">Frame 2 · add photo</span>
+          </div>
+          </div>
+        </article> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMERCIAL -->
+  <!-- <section class="section" id="commercial">
+    <div class="wrap">
+      <div class="head">
+        <h2>Commercial</h2>
+        <p>Brand, e-commerce and lifestyle work.</p>
+      </div>
+      <div class="trio">
+        <figure>
+          <div class="frame r45">
+            <span class="art"></span>
+            <span class="slot">Brand campaign · add photo</span>
+          </div>
+          <figcaption><b>Client name</b><span>Brand campaign</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r45">
+            <span class="art"></span>
+            <span class="slot">E-commerce · add photo</span>
+          </div>
+          <figcaption><b>Client name</b><span>E-commerce</span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r45">
+            <span class="art"></span>
+            <span class="slot">Lifestyle · add photo</span>
+          </div>
+          <figcaption><b>Client name</b><span>Lifestyle</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- DIGITALS -->
+  <section class="section digitals" id="digitals">
+    <div class="wrap">
+      <div class="head">
+        <h2>Digitals</h2>
+        <!-- <p>Unretouched, natural light, minimal makeup. The four standard angles agencies and casting directors ask for.</p> -->
+      </div>
+      <div class="quad">
+        <figure>
+          <div class="frame r34">
+            <span class="art"><img src="images/Digitals-Fron.jpeg"></span>
+            <!-- <span class="slot">Front, headshot · add photo</span> -->
+          </div>
+          <figcaption><b>Front</b><span></span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r34">
+            <span class="art"><img src="images/Digitals-Left.jpeg"></span>
+            <!-- <span class="slot">Profile · add photo</span> -->
+          </div>
+          <figcaption><b>Side Profile</b><span></span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r34">
+            <span class="art"><img src="images/Digitals-3-4.jpeg"></span>
+            <!-- <span class="slot">Full length · add photo</span> -->
+          </div>
+          <figcaption><b>Three-Fourths</b><span></span></figcaption>
+        </figure>
+        <figure>
+          <div class="frame r34">
+            <span class="art"><img src="images/Digitals-Smile.jpeg"></span>
+            <!-- <span class="slot">Smile · add photo</span> -->
+          </div>
+          <figcaption><b>Smile</b><span></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT AND CREDITS -->
+  <section class="section about" id="about">
+    <div class="wrap">
+      <div class="about-copy">
+        <span class="label">About</span>
+        <h2>Born in Spain, Miami Raised, Cuban Background</h2>
+        <p>At seventeen years old, i've had the privilge to start my modeling careers earlier than most. I hope to make the most out of this by seeking out more modeling opportunites. From runways, castings, and photoshoots, i'm open to anything. I speak both english and spanish, and have a profound interest for technology.</p>
+      </div>
+      <div>
+        <span class="label">Selected credits</span>
+        <ul class="credits">
+          <li><span>Tony Visions</span><span>FMFW, 2026</span></li>
+          <li><span>Luis Aponte</span><span>FMFW, 2026</span></li>
+          <!-- <li><span>Add a magazine</span><span>Editorial, year</span></li>
+          <li><span>Add a brand</span><span>Campaign, year</span></li> -->
+          <li><span>Maxmediagroup</span><span>Photoshoot, 2026</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- CONTACT: change the email in both places on the link line -->
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <span class="label">Bookings and castings</span>
+    <h2>Let's work together</h2>
+    <div class="mail">
+      <a href="mailto:alvarezmaximo660@gmail.com">alvarezmaximo660@gmail.com</a>
+    </div>
+    <div class="foot">
+      <!-- <span>Represented by: add agency, or remove this line</span> -->
+      <span>Instagram: @max1mo.a</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
